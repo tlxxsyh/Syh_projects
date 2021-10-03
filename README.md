@@ -1,5 +1,5 @@
 # Syh_projects
-Some example code about my project.
+用各种语言写的一些有趣的小项目。
 
 ## Update Notes
 
