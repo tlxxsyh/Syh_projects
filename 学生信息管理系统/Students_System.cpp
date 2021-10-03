@@ -1,10 +1,11 @@
 //============================================================================
-// Name        : Students_System.cpp
+// Name        : Students_System
 // Author      : Yuhang_Shang
-// Version     : Visual Studio Code
+// Date        : 2021.9.21
 // Copyright   : all rights reserved
 // Github      : https://github.com/tlxxsyh
-// Description : 实现一个美观的学生信息管理系统
+// Description : 本代码为C++代码
+//               实现一个美观的学生信息管理系统
 //               具有基本的增删改查功能
 //               并且每次清屏，显示菜单，防止程序显示过长以致翻阅不便
 //============================================================================
@@ -443,7 +444,7 @@ void MySort(struct form *student) //调出排序函数界面
 }
 
 //总分降序排序函数
-bool Descending_sum(struct form a, struct form b) 
+bool Descending_sum(struct form a, struct form b)
 {
     if (a.sumscore < b.sumscore)
         return a.sumscore > b.sumscore;
@@ -452,7 +453,7 @@ bool Descending_sum(struct form a, struct form b)
 }
 
 //总分升序排序函数
-bool Ascending_sum(struct form a, struct form b) 
+bool Ascending_sum(struct form a, struct form b)
 {
     if (a.sumscore > b.sumscore)
         return a.sumscore < b.sumscore;
@@ -461,7 +462,7 @@ bool Ascending_sum(struct form a, struct form b)
 }
 
 //学号降序排序函数
-bool Descending_num(struct form a, struct form b) 
+bool Descending_num(struct form a, struct form b)
 {
     if (a.id < b.id)
         return a.id > b.id;
@@ -470,7 +471,7 @@ bool Descending_num(struct form a, struct form b)
 }
 
 //学号升序排序函数
-bool Ascending_num(struct form a, struct form b) 
+bool Ascending_num(struct form a, struct form b)
 {
     if (a.id > b.id)
         return a.id < b.id;
@@ -479,12 +480,12 @@ bool Ascending_num(struct form a, struct form b)
 }
 
 //写文件
-void WriteFile(struct form *student) 
+void WriteFile(struct form *student)
 {
     //创建文件指针方便调用
-    FILE *file = fopen("D:/1.txt", "w"); 
+    FILE *file = fopen("D:/1.txt", "w");
     //打开失败的情况
-    if (file == NULL)                    
+    if (file == NULL)
     {
         printf("open error!\n");
         exit(1);
