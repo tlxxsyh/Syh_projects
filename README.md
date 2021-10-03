@@ -1,5 +1,5 @@
-# syuct20_syh
-Some example code about our homework.
+# Syh_projects
+Some example code about my project.
 
 Update Notes
 
