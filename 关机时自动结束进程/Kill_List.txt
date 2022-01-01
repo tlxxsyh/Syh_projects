@@ -1,0 +1,17 @@
+QQ.exe
+fotiaoqiang.exe
+360se.exe
+chrome.exe
+wallpaper32.exe
+TranslucentTB.exe
+WINWORD.EXE
+cloudmusic.exe
+cloudmusic_reporter.exe
+XZSearch64.exe
+XZSS.exe
+XZDesktop64.exe
+XZMainRecord.exe
+Snipaste.exe
+msedge.exe
+eudic.exe
+typora.exe
