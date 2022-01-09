@@ -1,6 +1,11 @@
-/**
-*   @title:2048游戏（图形化）
-*   @Lisence:All rights(转载请说明出处)
+/*
+* 程序名称：2048游戏（图形化）
+* 
+* 转载请注明原作者：Shang Yuhang
+* Email:yuhang.shang@qq.com
+* Website:www.shangyuhang.icu
+* 
+* 请勿用作商业用途！
 */
 
 #include <iostream>
