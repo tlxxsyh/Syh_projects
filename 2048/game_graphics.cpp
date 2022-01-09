@@ -277,10 +277,27 @@ void Game::initNum()
 	//随机创建坐标
 	while (1)
 	{
+		int cnt=0;
 		x = rand() % 4 + 1;
 		y = rand() % 4 + 1;
 		if (map[x][y] == 0) {
 			map[x][y] = creatNumber();
+			break;
+		}
+		//若是满了则无法插入，因此需要检测一下是否满
+		for (int i = 1; i <= 4; i++)
+		{
+			for (int j = 1; j <= 4; j++)
+			{
+				if (map[i][j] != 0)
+				{
+					cnt++;
+				}
+			}
+		}
+		//如果满了，则跳出循环
+		if (cnt == 16)
+		{
 			break;
 		}
 	}
