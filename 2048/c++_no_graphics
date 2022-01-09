@@ -1,0 +1,375 @@
+#include <iostream>
+#include <cstdlib>
+#include <conio.h>
+#include <cstdlib>
+
+using namespace std;
+
+class Game 
+{
+private:
+	int map[5][5];
+	int row_1[5];
+	int row_2[5];
+	int row_3[5];
+	int row_4[5];
+	int line_1[5];
+	int line_2[5];
+	int line_3[5];
+	int line_4[5];
+public:
+	int key;
+	Game(){
+		//初始化
+		memset(map, 0, sizeof(map));
+		memset(map, 0, sizeof(row_1));
+		memset(map, 0, sizeof(row_2));
+		memset(map, 0, sizeof(row_3));
+		memset(map, 0, sizeof(row_4));
+		memset(map, 0, sizeof(line_1));
+		memset(map, 0, sizeof(line_2));
+		memset(map, 0, sizeof(line_3));
+		memset(map, 0, sizeof(line_4));
+		key = 0;
+		initNum();
+		initNum();
+	}
+	void showMap();//展示棋盘
+	void initNum();//插入随机数
+	int keyEvent();//获取按键
+	void getArray(int flag);//获取一维数组
+	void move();//移动操作
+	void getMapLine();//数组还原
+	void getMapRow();//数组还原
+	void left(int a[]);//左移
+};
+
+
+int creatNumber();
+
+int main()
+{
+	int key;
+	//随机种子
+	srand(time(NULL));
+	//实例化游戏
+	Game game2048;
+	//展示棋盘
+	game2048.showMap();
+	//游戏过程
+	while (1)
+	{
+		game2048.key = game2048.keyEvent();
+		game2048.getArray(game2048.key);
+		//如果是上下的
+		if (game2048.key == 72 || game2048.key == 80)
+		{
+			game2048.move();
+			game2048.getMapLine();
+		}
+		//如果是左右的
+		else
+		{
+			game2048.move();
+			game2048.getMapRow();
+		}
+		game2048.initNum();
+		system("cls");
+		game2048.showMap();
+	}
+	return 0;
+}
+//移动操作
+void Game::move()
+{
+	if (this->key == 72 || this->key == 80)
+	{
+		this->left(line_1);
+		this->left(line_2);
+		this->left(line_3);
+		this->left(line_4);
+	}
+	else
+	{
+		this->left(row_1);
+		this->left(row_2);
+		this->left(row_3);
+		this->left(row_4);
+	}
+	
+}
+
+//向左移
+void Game::left(int a[])
+{
+	//看能否相加的遍历
+	for (int i = 1; i < 4; i++) {
+		//如果此位置不为0
+		if (a[i] != 0)
+		{
+			//寻找下一个不为0的位置，看能否相加
+			for (int j = i + 1; j <= 4; j++)
+			{
+				//如果不为0，看是否相等
+				if (a[j] != 0)
+				{
+					//如果相等
+					if (a[i] == a[j])
+					{
+						a[i] = 2 * a[i];
+						a[j] = 0;
+					}
+					//如果不等，则什么都不做
+					//要跳出寻找不为0的数的循环
+					break;
+				}
+				//为0，则什么都不做
+			}
+		}
+		//如果此位置为0，则什么都不做
+	}
+	//移动的遍历
+	for (int i = 3; i >= 1; i--)
+	{
+		if (a[i] == 0)
+		{
+			a[i] = a[i + 1];
+			a[i + 1] = 0;
+		}
+	}
+	//再次检查移动
+	for (int i = 3; i >= 1; i--)
+	{
+		if (a[i] == 0)
+		{
+			a[i] = a[i + 1];
+			a[i + 1] = 0;
+		}
+	}
+}
+
+//显示棋盘
+void Game::showMap()
+{
+	for (int i = 1; i <= 4; i++)
+	{
+		for (int j = 1; j <= 4; j++)
+		{
+			cout << map[i][j] << "\t";
+		}
+		cout << "\n";
+	}
+}
+
+//随机插入
+void Game::initNum()
+{
+	//srand(time(NULL));
+	int x, y;
+	//随机创建坐标
+	while (1)
+	{
+		x = rand() % 4 + 1;
+		y = rand() % 4 + 1;
+		if (map[x][y] == 0) {
+			map[x][y] = creatNumber();
+			break;
+		}
+	}
+}
+
+//创建随机数2、4
+int creatNumber()
+{
+	//srand(time(NULL));
+	if (rand() % 3 == 1)
+	{
+		return 4;
+	}
+	return 2;
+}
+
+//获取按键
+int Game::keyEvent()
+{
+	int key = _getch();
+	if (key == 224)
+	{
+		key = _getch();
+	}
+	//cout << key;
+	return key;
+}
+
+//二维转一维
+void Game::getArray(int flag)
+{
+	//上
+	if (flag == 72)
+	{
+		for (int j = 1; j <= 4; j++)
+		{
+			line_1[j] = this->map[j][1];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			line_2[j] = this->map[j][2];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			line_3[j] = this->map[j][3];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			line_4[j] = this->map[j][4];
+		}
+	}
+	//下
+	else if (flag == 80)
+	{
+		for (int j = 1; j <= 4; j++)
+		{
+			line_1[4-j+1] = this->map[j][1];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			line_2[4-j+1] = this->map[j][2];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			line_3[4-j+1] = this->map[j][3];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			line_4[4-j+1] = this->map[j][4];
+		}
+	}
+	//左
+	else if (flag == 75)
+	{
+		for (int j = 1; j <= 4; j++)
+		{
+			row_1[j] = this->map[1][j];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			row_2[j] = this->map[2][j];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			row_3[j] = this->map[3][j];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			row_4[j] = this->map[4][j];
+		}
+	}
+	//右
+	else if (flag == 77)
+	{
+		for (int j = 1; j <= 4; j++)
+		{
+			row_1[4 - j + 1] = this->map[1][j];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			row_2[4 - j + 1] = this->map[2][j];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			row_3[4 - j + 1] = this->map[3][j];
+		}
+		for (int j = 1; j <= 4; j++)
+		{
+			row_4[4 - j + 1] = this->map[4][j];
+		}
+	}
+}
+
+//列转图
+void Game::getMapLine()
+{
+	if (key == 72)
+	{
+		for (int i = 1; i <= 4; i++)
+		{
+			map[i][1] = line_1[i];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[i][2] = line_2[i];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[i][3] = line_3[i];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[i][4] = line_4[i];
+		}
+	}
+	else
+	{
+		for (int i = 1; i <= 4; i++)
+		{
+			map[i][1] = line_1[4-i+1];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[i][2] = line_2[4 - i + 1];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[i][3] = line_3[4 - i + 1];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[i][4] = line_4[4 - i + 1];
+		}
+	}
+	
+}
+
+//行转图
+void Game::getMapRow()
+{
+	if (key == 75)
+	{
+		for (int i = 1; i <= 4; i++)
+		{
+			map[1][i] = row_1[i];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[2][i] = row_2[i];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[3][i] = row_3[i];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[4][i] = row_4[i];
+		}
+	}
+	else
+	{
+		for (int i = 1; i <= 4; i++)
+		{
+			map[1][i] = row_1[4-i+1];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[2][i] = row_2[4 - i + 1];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[3][i] = row_3[4 - i + 1];
+		}
+		for (int i = 1; i <= 4; i++)
+		{
+			map[4][i] = row_4[4 - i + 1];
+		}
+	}
+	
+}
