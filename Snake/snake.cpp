@@ -114,7 +114,8 @@ void DrawMap()
 	f.lfHeight = 24;
 	settextstyle(&f);
 	outtextxy(GRID_W_NUM * GRID_SIZE + 25, 640, "通过↑↓←→键控制蛇的移动");
-	outtextxy(GRID_W_NUM * GRID_SIZE + 25, 670, "尽可能多的吃掉蓝色方块");
+	outtextxy(GRID_W_NUM * GRID_SIZE + 25, 670, "按下空格键暂停");
+	outtextxy(GRID_W_NUM * GRID_SIZE + 25, 700, "尽可能多的吃掉蓝色方块叭！");
 	
 	//欢迎访问
 	f.lfHeight = 30;
@@ -139,8 +140,8 @@ void Snake::draw()
 			else if (map[i][j] == -1)
 				setfillcolor(RGB(151, 150, 151));
 			//食物
-			else if(map[i][j]==-2)
-				setfillcolor(BLUE);
+			else if (map[i][j] == -2)
+				setfillcolor(RGB(117, 206, 249));
 			//背景
 			else
 				setfillcolor(RGB(247, 246, 242));
@@ -155,18 +156,25 @@ void Snake::getKey()
 	if (kbhit())
 	{
 		tkey = _getch();
-		if (tkey == 224) {
+		if (tkey == 224)//方向键
+		{
 			tkey = _getch();
+			//注意Key与tkey不同
+			//临时变量是为了保证向上下移动状态下只能接受左右命令
 			if (Key == 72||Key==80) {
 				if (tkey == 75 || tkey == 77)
 					Key = tkey;
 				else;
 			}
-			else{
+			else if(Key==75||Key==77){
 				if (tkey == 72 || tkey == 80)
 					Key = tkey;
 				else;
 			}
+		}
+		else if (tkey == 32)//空格键
+		{
+			system("pause");
 		}
 	}
 	move();
@@ -293,3 +301,4 @@ void Snake::autoMove()
 		waitIndex = 1;
 	}
 }
+
