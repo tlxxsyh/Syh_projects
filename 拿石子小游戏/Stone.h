@@ -9,8 +9,8 @@ private:
 	int m;//总石头数
 	int n;//每次最多拿的个数
 	int first;//先后手标记，1为玩家先手，2为玩家后手
-	int tem;
-	int isend = 1;
+	int tem;//玩家选择拿的个数
+	int isend = 1;//判断游戏是否结束
 public:
 	void rules();
 	void reset();
