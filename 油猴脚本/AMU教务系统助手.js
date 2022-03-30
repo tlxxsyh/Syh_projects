@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         AMU安徽医科大学教务系统助手
+// @name         AHMU安徽医科大学教务系统助手
 // @namespace    http://tampermonkey.net/
-// @version      2.0
-// @description  安徽医科大学登录页面自动输入密码，教师评价界面按回车键自动评价
+// @version      2.1
+// @description  安徽医科大学登录页面自动输入密码，教师评价界面按回车键自动评价,左下角添加看板娘
 // @author       Yuhang Shang
 // @match        *://jwgl.ahmu.edu.cn/eams/*
 // @icon         https://www.shangyuhang.icu/favicon/64_64.ico
