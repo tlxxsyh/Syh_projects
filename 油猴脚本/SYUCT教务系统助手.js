@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         SYUCT沈阳化工大学教务系统助手
 // @namespace    http://tampermonkey.net/
-// @version      1.6
-// @description  提供按下回车一键自动填写评价功能，iframe框架内显示看板娘功能
+// @version      2.1
+// @description  教务系统自动填写账号密码，按下回车一键自动评教，iframe框架内显示看板娘功能
 // @author       Yuhang Shang
 // @match        *://jws.syuct.edu.cn/*
 // @icon         https://www.shangyuhang.icu/favicon/64_64.ico
@@ -12,18 +12,25 @@
  
 (function() {
     'use strict';
+    
+    //抢课卡进服务器专用
+    document.querySelector("#content_no > p:nth-child(5) > a").click();
     //使用帮助
-    //在使用脚本按键前请先点击页面，使脚本能够获取焦点
-    //按下回车键自动填写教师评价（默认第一行是良好，其余行均为优秀）
+    //在使用脚本按键前：请先点击评教页面表格任意位置，使脚本能够获取焦点
+    //按下回车键自动填写教师评价（随机一行是良好，其余行均为优秀）
  
+    //=======================================
+    //    请在此填写您的账号和密码
+    //=======================================
     var your_username='你的学号';
     var your_password='你的密码';
  
     //全局变量
-    var StudentLoginURL='default2.aspx';
-    var iiframe;
-    var girl_link;
-    var girl_script;
+    var StudentLoginURL='default2.aspx';//学生登录页面url
+    var iiframe;//用来获取内部iframe框架的变量
+    var girl_link;//存储引入桌宠项目所需添加的link元素
+    var girl_script;//存储引入桌宠项目所需添加的script元素
+    var randNum;//随机数
  
     //键盘监听事件
     document.addEventListener('keydown', my);
@@ -36,17 +43,33 @@
  
     //自动评价功能
     function write(){
+        //先将所有行全填为优秀
         let rows=document.querySelector('#DataGrid1').rows.length-1;
         for(let i=0;i<rows;i++){
             let my_selector='#DataGrid1__ctl'+(i+2)+'_JS1';
             document.querySelector(my_selector).value='优秀';
-            console.log(my_selector);
+            //console.log(my_selector);
         }
-        var final=document.getElementById('DataGrid1__ctl2_JS1');
-        final.value='良好';
+        //再随机一行填为良好
+        randNum=randomNum(2,1+rows);
+        let my_selector2='#DataGrid1__ctl'+randNum+'_JS1';
+        document.querySelector(my_selector2).value='良好';
+        //var final=document.getElementById('DataGrid1__ctl2_JS1');
+        //final.value='良好';
         document.querySelector('#Button1').click();
     }
  
+    //随机函数，返回一个介于minNum和maxNum之间的值（包括两端边界）
+     function randomNum(minNum,maxNum){
+        switch(arguments.length){
+            case 1:
+                return parseInt(Math.random()*minNum+1,10);break;
+            case 2:
+                return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);break;
+            default:
+                return 0;break;
+        }
+    }
  
     //学生登录系统
     var windowURL = window.location.href;
@@ -102,100 +125,3 @@
     }
  
 })();
- 
-//我把这些历史遗留的解决思路放在这里,以备不时之需
- 
-/*
-//这个代码无法直接执行，需要点击选中元素才能执行，解决方法未知
-    function write2(){
-        let rows=document.querySelector('#DataGrid1').rows.length-1;
-        for(let i=0;i<rows;i++){
-            let my_selector='#DataGrid1__ctl'+(i+2)+'_JS1';
-            document.querySelector(my_selector).value='良好';
-            console.log(my_selector);}
-    }
-*/
- 
-/*function write(){
-        var a=document.getElementById('DataGrid1__ctl2_JS1');
-        a.value='良好';
-        if(a=document.getElementById('DataGrid1__ctl3_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl4_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl5_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl6_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl7_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl8_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl9_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl10_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl11_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl12_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl13_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl14_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl15_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl16_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl17_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl18_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl19_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl20_JS1'))
-        {
-            a.value='优秀';
-        }
-        if(a=document.getElementById('DataGrid1__ctl21_JS1'))
-        {
-            a.value='优秀';
-        }
-        document.querySelector('#pjxx').value='非常好';
-        //document.querySelector('#Button1').click();
-    }
-    */
